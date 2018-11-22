@@ -48,9 +48,9 @@ end
 post "/marks" do
   @mark = Mark.new(params[:mark])
   if @mark.save
-    redirect "marks/#{@mark.id}", :notice => 'Классно! Пост добавлен (This message will disappear in 4 seconds.)'
+    redirect "marks/#{@mark.id}", :notice => 'Классно! Пост добавлен'
   else
-    redirect "marks/new", :error => 'Ты напортачил, попробуй еще (This message will disappear in 4 seconds.)'
+    redirect "marks/new", :error => 'Ты напортачил, попробуй еще'
   end
 end
 
