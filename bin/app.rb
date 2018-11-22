@@ -14,7 +14,7 @@ set :views, "views"
 set :public_directory, "public"
 
 class Mark < ActiveRecord::Base
-  validates :car_number, presence: true
+  validates :car_number, presence: true, length: { maximum: 15 }
 end
 
 helpers do
@@ -27,31 +27,49 @@ helpers do
   end
 end
 
+# All Marks
 get "/" do
   @marks = Mark.order("created_at DESC")
   
   erb :"index"
 end
 
+#Add new mark
 get "/marks/new" do
   @title = "Создание новой метки"
   @mark = Mark.new
   erb :"marks/new"
 end
 
+#Add mark to DB
+post "/marks" do
+  @mark = Mark.new(params[:mark])
+  if @mark.save
+    redirect "marks/#{@mark.id}", :notice => 'Классно! Пост добавлен!'
+  else
+    redirect "marks/new", :error => 'Ты напортачил, попробуй еще!'
+  end
+end
+
+#Get one mark by ID
 get "/marks/:id" do
   @title = "Просмотр метки"
   @mark = Mark.find(params[:id])
   erb :"marks/view"
 end
 
-post "/marks" do
-  @mark = Mark.new(params[:mark])
-  if @mark.save
-    redirect "marks/#{@mark.id}", :notice => 'Классно! Пост добавлен'
-  else
-    redirect "marks/new", :error => 'Ты напортачил, попробуй еще'
-  end
+#Edit mark by ID
+get "/marks/:id/edit" do
+  @mark = Mark.find(params[:id])
+  @title = "Edit Form"
+  erb :"marks/edit"
+end
+
+#Edit mark by ID in DB
+put "/marks/:id" do
+  @mark = Mark.find(params[:id])
+  @mark.update(params[:mark])
+  redirect "/marks/#{@mark.id}"
 end
 
 =begin
