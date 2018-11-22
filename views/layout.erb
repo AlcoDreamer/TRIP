@@ -2,10 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>YasyaLoves</title>
+    <title><%= title %></title>
   </head>
   <body>
-    <%= Time.now %>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/marks/new">New Mark</a></li>
+    </ul>
+    <br>
+    <br>
+
     <%= yield %>
+    
+    <br>
+    <br>
+    <% if flash[:notice] %>
+      <p class="alert alert-success"><%= flash[:notice] %>
+    <% end %>
+    <% if flash[:error] %>
+      <p class="alert alert-error"><%= flash[:error] %>
+    <% end %>
+    <br>
+    <br>
+    <a><%= (Time.now).strftime("Текущее дата и время %d/%m/%Y : %H:%M:%S") %> </a>
   </body>
 </html>

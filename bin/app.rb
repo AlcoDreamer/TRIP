@@ -2,7 +2,11 @@ require 'sinatra'
 #require 'sinatra/namespace'
 require 'active_record'
 require 'sinatra/activerecord'
+require 'sinatra/flash'
+require 'sinatra/redirect_with_flash'
 require './bin/environments'
+
+enable :sessions
 
 set :port, 8080
 set :static, true
@@ -10,6 +14,44 @@ set :views, "views"
 set :public_directory, "public"
 
 class Mark < ActiveRecord::Base
+  validates :car_number, presence: true
+end
+
+helpers do
+  def title
+    if @title
+      "#{@title}"
+    else
+      "Yasya!"
+    end
+  end
+end
+
+get "/" do
+  @marks = Mark.order("created_at DESC")
+  
+  erb :"index"
+end
+
+get "/marks/new" do
+  @title = "Создание новой метки"
+  @mark = Mark.new
+  erb :"marks/new"
+end
+
+get "/marks/:id" do
+  @title = "Просмотр метки"
+  @mark = Mark.find(params[:id])
+  erb :"marks/view"
+end
+
+post "/marks" do
+  @mark = Mark.new(params[:mark])
+  if @mark.save
+    redirect "marks/#{@mark.id}", :notice => 'Классно! Пост добавлен (This message will disappear in 4 seconds.)'
+  else
+    redirect "marks/new", :error => 'Ты напортачил, попробуй еще (This message will disappear in 4 seconds.)'
+  end
 end
 
 =begin

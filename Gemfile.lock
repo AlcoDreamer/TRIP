@@ -21,6 +21,8 @@ GEM
     mustermann (1.0.2)
     pg (1.1.3)
     rack (2.0.6)
+    rack-flash3 (1.0.5)
+      rack
     rack-protection (2.0.1)
       rack
     rack-test (0.6.3)
@@ -63,6 +65,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   pg
+  rack-flash3
   rake
   sinatra
   sinatra-activerecord

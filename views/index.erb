@@ -1,3 +1,9 @@
-<h1>
-  "Yasya love you"!
-</h1>
+<ul>
+<% @marks.each do |mark| %>
+  <li>
+    <h4>Индекс: "<%= mark.id %>"</a></h4>
+    <h4>Номер машины: "<%= mark.car_number %>"</a></h4>
+    <p>Метка создана: <%= mark.created_at %></p>
+  </li>
+<% end %>
+</ul>
