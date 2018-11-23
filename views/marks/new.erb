@@ -1,12 +1,12 @@
 <h2>Создание метки</h2>
 <br/>
-<form action="/marks" method="post" role="form">
+<form action="/marks" method="post" enctype="multipart/form-data" role="form">
  <div class="form-group">
     <label for="post_title">Номер авто:</label>
     <br>
     <input id="mark_car_number" class="form-control" name="mark[car_number]" type="text"  style="width=90%"/>
     <br>
-    <input id="makr_image" name="yasyas_image" type="file" hidden>
+    <input id="makr_image" name="mark[image]" type="file" hidden>
  </div>
  <button type="submit" class="btn btn-success">Submit</button>
 </form>

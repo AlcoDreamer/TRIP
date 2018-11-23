@@ -5,6 +5,9 @@ require 'sinatra/activerecord'
 require 'sinatra/flash'
 require 'sinatra/redirect_with_flash'
 
+require 'carrierwave'
+require 'carrierwave/orm/activerecord'
+#require 'rmagick'
 
 require './bin/environments'
 
@@ -15,8 +18,43 @@ set :static, true
 set :views, "views"
 set :public_directory, "public"
 
+class ImageUploader < CarrierWave::Uploader::Base
+  include CarrierWave::MiniMagick
+
+  def store_dir
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  end
+
+  def extension_white_list
+    %w(jpg jpeg gif png)
+  end
+
+  def filename
+    "#{mounted_as}_#{model.id}.#{file.extension}"
+  end
+=begin
+  version :small do 
+    process :resize_to_fit => [190, 190] 
+    process :convert => 'png' 
+    def filename
+      "small_#{mounted_as}_#{model.id}.#{file.extension}"
+    end
+  end 
+  version :icon do 
+    process :resize_to_fill => [50, 50] 
+    process :convert => 'png'
+    def filename
+      "icon_#{mounted_as}_#{model.id}.#{file.extension}"
+    end
+  end 
+=end
+
+  storage :file
+end
+
 class Mark < ActiveRecord::Base
-  validates :car_number, presence: true, length: { maximum: 15 }
+  #validates :car_number, presence: true, length: { maximum: 15 }
+  mount_uploader :image, ImageUploader
 end
 
 helpers do
@@ -32,32 +70,35 @@ end
 # All Marks
 get "/" do
   @marks = Mark.order("created_at DESC")
-  
   erb :"index"
 end
 
 #Add new mark
 get "/marks/new" do
   @title = "Создание новой метки"
-  @mark = Mark.new
+  
   erb :"marks/new"
 end
 
 #Add mark to DB
 post "/marks" do
-  @imgname = params[:yasyas_image][:filename]
-  img = params[:yasyas_image][:tempfile]
-  puts @imgname
-  File.open("./public/uploads/images/#{@imgname}", 'wb') do |f|
-    f.write(img.read)
-  end
-
-  @mark = Mark.new(params[:mark])
+  @mark = Mark.new
+  @mark.image = params[:mark][:image]
+  @mark.car_number = params[:mark][:car_number]
+  #mark = params[:mark]
+  @mark.save
+  redirect "marks/#{@mark.id}"
+=begin    
+  @mark = Mark.new
+  @mark.car_number = params[:mark][:car_number]
+  
   if @mark.save
     redirect "marks/#{@mark.id}", :notice => 'Классно! Пост добавлен!'
   else
     redirect "marks/new", :error => 'Ты напортачил, попробуй еще!'
   end
+=end
+
 end
 
 #Get one mark by ID

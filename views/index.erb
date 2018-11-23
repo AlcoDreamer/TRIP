@@ -2,7 +2,7 @@
   <div class="row">
     <% @marks.each do |mark| %>
       <div class="card" text-center>
-        
+        <img class="card-img-top" src="uploads/mark/image/<%= mark.id %>/image_<%= mark.id %>.jpg" alt="Card image cap">
         <div class="card-block">
           <h4 class="card-title">Метка <%= mark.id %></h4>
           <p class="card-text">Номер машины: "<%= mark.car_number %>"</p>

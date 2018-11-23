@@ -6,8 +6,9 @@ gem "sinatra-activerecord"
 gem 'rack-flash3'
 gem 'sinatra-flash'
 gem 'sinatra-redirect-with-flash'
-gem "rake"
-
+gem 'rake'
+gem 'mini_magick'
+gem 'carrierwave'
 
 group :development do
   gem 'sqlite3'
