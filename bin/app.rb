@@ -21,6 +21,9 @@ set :public_directory, "public"
 class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
+  def cache_dir
+    "../tmp/uploads"
+  end
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
