@@ -1,9 +1,18 @@
-<ul>
-<% @marks.each do |mark| %>
-  <li>
-    <h4>Индекс: "<%= mark.id %>"</a></h4>
-    <h4>Номер машины: "<%= mark.car_number %>"</a></h4>
-    <p>Метка создана: <%= mark.created_at %></p>
-  </li>
-<% end %>
-</ul>
+<div class="album text-muted">
+  <div class="row">
+    <% @marks.each do |mark| %>
+      <div class="card" text-center>
+        
+        <div class="card-block">
+          <h4 class="card-title">Метка <%= mark.id %></h4>
+          <p class="card-text">Номер машины: "<%= mark.car_number %>"</p>
+          <p class="card-text">Метка создана: <%= mark.created_at %></p>      
+          <p class="card-text"><small class="text-muted">Последнее изменение: <%= mark.updated_at %></small></p>
+          <a href="/marks/<%= mark.id %>/edit" class="btn btn-primary">Редактировать</a>
+        </div>
+      </div>
+      <hr class="my-4">
+
+    <% end %>
+  </div>
+</div>

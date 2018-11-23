@@ -21,7 +21,7 @@
     </style>
   </head>
 
-  <body>
+  <body class="bg-light">
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -43,25 +43,33 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-
-    <div class="container">
+    
+    <div class="container" >
       <% if flash[:notice] %>
-        <p class="alert alert-success"><%= flash[:notice] %>
+        <p class="alert alert-success"><%= flash[:notice] %></p>
       <% end %>
       <% if flash[:error] %>
-        <p class="alert alert-danger"><%= flash[:error] %>
+        <p class="alert alert-danger"><%= flash[:error] %></p>
       <% end %>
 
-      <div class="jumbotron">
+      
         <%= yield %>
-      </div>
+      
     </div><!-- /.container -->
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script>
     //** removes alerts after 4 seconds */
     window.setTimeout(function() {

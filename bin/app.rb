@@ -4,6 +4,8 @@ require 'active_record'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
 require 'sinatra/redirect_with_flash'
+
+
 require './bin/environments'
 
 enable :sessions
@@ -43,6 +45,13 @@ end
 
 #Add mark to DB
 post "/marks" do
+  @imgname = params[:yasyas_image][:filename]
+  img = params[:yasyas_image][:tempfile]
+  puts @imgname
+  File.open("./public/uploads/images/#{@imgname}", 'wb') do |f|
+    f.write(img.read)
+  end
+
   @mark = Mark.new(params[:mark])
   if @mark.save
     redirect "marks/#{@mark.id}", :notice => 'Классно! Пост добавлен!'

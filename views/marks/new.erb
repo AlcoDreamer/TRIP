@@ -2,9 +2,11 @@
 <br/>
 <form action="/marks" method="post" role="form">
  <div class="form-group">
-   <label for="post_title">Номер авто:</label>
-   <br>
-   <input id="mark_car_number" class="form-control" name="mark[car_number]" type="text" value="<%= @mark.car_number %>" style="width=90%"/>
+    <label for="post_title">Номер авто:</label>
+    <br>
+    <input id="mark_car_number" class="form-control" name="mark[car_number]" type="text"  style="width=90%"/>
+    <br>
+    <input id="makr_image" name="yasyas_image" type="file" hidden>
  </div>
  <button type="submit" class="btn btn-success">Submit</button>
 </form>
