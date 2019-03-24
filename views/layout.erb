@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title><%= title %></title>
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet">
     <style>
       body {
         padding-top: 75px;
@@ -18,31 +18,47 @@
       .container {
         max-width:1000px;
       }
+      .buffer { 
+        margin-top:20px;
+        margin-bottom:20px;
+        margin-right: 20px;
+        margin-left: 20px; 
+      }
+      .tag { 
+        margin-right: 10px;
+        margin-left: 10px; 
+      }
     </style>
   </head>
 
   <body class="bg-light">
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-fixed-top" style="background-color: #000000;">
       <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">TRIP</a>
+        <a class="navbar-brand" href="#">TRIIP</a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="/marks">Список меток</a></li>
+            <li class="nav-item"><a class="nav-link" href="/users">Список пользователей</a></li>
+            <li class="nav-item"><a class="nav-link" href="/marks/new">Новая метка</a></li>
+            <li class="nav-item"><a class="nav-link" href="/users/new">Новый пользователь</a></li>
+          </ul>
+          <ul class="navbar-nav mt-2 mt-md-0 ml-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Admin01
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="">Новый админ<span class="sr-only">(current)</span></a>
+                <a class="dropdown-item" href="#">Сменить пароль<span class="sr-only">(current)</span></a>
+              </div>
+            </li>
+          </ul>
         </div>
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li ><a href="/">Список меток</a></li>
-            <li><a href="/marks/new">Новая метка</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a> <%= (Time.now).strftime("Текущее дата и время %d/%m/%Y : %H:%M:%S") %> </a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
       </div>
-    </div>
+    </nav>
     
     <div class="container" >
       <% if flash[:notice] %>
@@ -62,13 +78,13 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
     <script>
     //** removes alerts after 4 seconds */

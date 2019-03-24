@@ -1,12 +1,29 @@
 <h2>Создание метки</h2>
 <br/>
 <form action="/marks" method="post" enctype="multipart/form-data" role="form">
- <div class="form-group">
+  <div class="form-group">
+    <label for="post_title">Название:</label>
+    <input id="mark_car_number" class="form-control" name="mark[title]" type="text"  style="width=90%"/>
+  </div>
+  
+  <div class="form-group">
     <label for="post_title">Номер авто:</label>
-    <br>
     <input id="mark_car_number" class="form-control" name="mark[car_number]" type="text"  style="width=90%"/>
-    <br>
-    <input id="makr_image" name="mark[image]" type="file" hidden>
- </div>
- <button type="submit" class="btn btn-success">Submit</button>
+  </div>
+  
+  <div class="form-group">
+    <label for="post_title">Автор:</label>
+    <input id="mark_car_number" class="form-control" name="mark[author]" type="text"  style="width=90%"/>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Описание метки</label>
+    <textarea class="form-control" name="mark[description]" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+  
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Фото автомобиля</label>
+    <input id="makr_image" name="mark[image]" type="file">
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
 </form>

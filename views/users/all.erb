@@ -1,0 +1,18 @@
+<div class="album text-muted">
+  <div class="row">
+    <% @marks.each do |mark| %>
+      <div class="card" text-center>
+        <img class="card-img-top" src="uploads/mark/image/<%= mark.id %>/image_<%= mark.id %>.<%= "#{mark.image.path}".rpartition('.').last %>" alt="Card image cap">
+        <div class="card-block">
+          <h4 class="card-title">Метка <%= mark.id %></h4>
+          <p class="card-text">Номер машины: "<%= mark.car_number %>"</p>
+          <p class="card-text">Метка создана: <%= mark.created_at %></p>      
+          <p class="card-text"><small class="text-muted">Последнее изменение: <%= mark.updated_at %></small></p>
+          <a href="/marks/<%= mark.id %>/edit" class="btn btn-primary">Редактировать</a>
+        </div>
+      </div>
+      <hr class="my-4">
+
+    <% end %>
+  </div>
+</div>

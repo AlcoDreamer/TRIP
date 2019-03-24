@@ -72,25 +72,26 @@ end
 
 # All Marks
 get "/" do
+  #@marks = Mark.order("created_at DESC")
+  #erb :"index"
+  redirect "/marks"
+end
+
+##############################
+# Обработка меток
+##############################
+
+# All Marks
+get "/marks" do
+  @title = "Все метки"
   @marks = Mark.order("created_at DESC")
-  erb :"index"
+  erb :"marks/all"
 end
 
 #Add new mark
 get "/marks/new" do
   @title = "Создание новой метки"
-  
   erb :"marks/new"
-end
-
-#Add mark to DB
-post "/marks" do
-  @mark = Mark.new
-  @mark.image = params[:mark][:image]
-  @mark.car_number = params[:mark][:car_number]
-  #mark = params[:mark]
-  @mark.save
-  redirect "marks/#{@mark.id}"
 end
 
 #Get one mark by ID
@@ -102,12 +103,57 @@ end
 
 #Edit mark by ID
 get "/marks/:id/edit" do
+  @title = "Редактирование метки"
   @mark = Mark.find(params[:id])
-  @title = "Edit Form"
-
-  
   erb :"marks/edit"
 end
+
+##############################
+# Обработка пользователей
+##############################
+
+# All Users
+get "/users" do
+  @marks = Mark.order("created_at DESC")
+  erb :"marks/all"
+end
+
+#Add new user
+get "/users/new" do
+  @title = "Создание новой метки"
+  
+  erb :"users/new"
+end
+
+#Get one user by ID
+get "/users/:id" do
+  @title = "Просмотр метки"
+  @mark = Mark.find(params[:id])
+  erb :"users/view"
+end
+
+#Edit users by ID
+get "/users/:id/edit" do
+  @mark = Mark.find(params[:id])
+  @title = "Edit Form"
+  erb :"users/edit"
+end
+
+
+
+#Add mark to DB
+post "/marks" do
+  @mark = Mark.new
+  @mark.image = params[:mark][:image]
+  @mark.title = params[:mark][:title]
+  @mark.author = params[:mark][:author]
+  @mark.car_number = params[:mark][:car_number]
+  @mark.description = params[:mark][:description]
+  #mark = params[:mark]
+  @mark.save
+  redirect "marks/#{@mark.id}"
+end
+
 
 #Edit mark by ID in DB
 put "/marks/:id" do

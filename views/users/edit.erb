@@ -1,0 +1,11 @@
+<h2>Edit Mark</h2>
+<br/>
+<form action="/marks/<%= @mark.id %>" method="post">
+  <div class="form-group">
+    <input type="hidden" name="_method" value="put" />
+    <label>Number:</label>
+    <br>
+    <input id="car_number" class="form-control" name="mark[car_number]" type="text" value="<%= @mark.car_number %>" />
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
