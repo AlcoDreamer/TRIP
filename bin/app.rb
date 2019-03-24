@@ -60,6 +60,11 @@ class Mark < ActiveRecord::Base
   mount_uploader :image, ImagesUploader
 end
 
+class User < ActiveRecord::Base
+  #validates :car_number, presence: true, length: { maximum: 15 }
+  mount_uploader :image, ImagesUploader
+end
+
 helpers do
   def title
     if @title
@@ -114,31 +119,30 @@ end
 
 # All Users
 get "/users" do
-  @marks = Mark.order("created_at DESC")
-  erb :"marks/all"
+  @title = "Все метки"
+  @users = User.order("created_at DESC")
+  erb :"users/all"
 end
 
 #Add new user
 get "/users/new" do
-  @title = "Создание новой метки"
-  
+  @title = "Создание нового пользователя"
   erb :"users/new"
 end
 
 #Get one user by ID
 get "/users/:id" do
-  @title = "Просмотр метки"
-  @mark = Mark.find(params[:id])
+  @title = "Просмотр пользователя"
+  @user = User.find(params[:id])
   erb :"users/view"
 end
 
-#Edit users by ID
+#Edit user by ID
 get "/users/:id/edit" do
-  @mark = Mark.find(params[:id])
-  @title = "Edit Form"
+  @title = "Редактирование пользователя"
+  @user = User.find(params[:id])
   erb :"users/edit"
 end
-
 
 
 #Add mark to DB
@@ -149,15 +153,48 @@ post "/marks" do
   @mark.author = params[:mark][:author]
   @mark.car_number = params[:mark][:car_number]
   @mark.description = params[:mark][:description]
+  @mark.tags = params[:mark][:tags]
   #mark = params[:mark]
   @mark.save
   redirect "marks/#{@mark.id}"
 end
 
+post "/marks/:id/edit" do
+  @mark = Mark.find(params[:id])
+  @mark.update(params[:mark])
+  redirect "/marks/#{@mark.id}"
+end
 
 #Edit mark by ID in DB
 put "/marks/:id" do
   @mark = Mark.find(params[:id])
   @mark.update(params[:mark])
+  redirect "/marks/#{@mark.id}"
+end
+
+
+post "/users" do
+  @user = User.new
+  @user.image = params[:user][:image]
+  @user.name = params[:user][:name]
+  @user.nick = params[:user][:nick]
+  @user.email = params[:user][:email]
+  @user.password = params[:user][:password]
+  @user.sex = params[:user][:sex]
+
+  @user.save
+  redirect "users/#{@user.id}"
+end
+
+post "/users/:id/edit" do
+  @user = User.find(params[:id])
+  @user.update(params[:user])
+  redirect "/users/#{@user.id}"
+end
+
+#Edit mark by ID in DB
+put "/users/:id" do
+  @user = User.find(params[:id])
+  @user.update(params[:mark])
   redirect "/marks/#{@mark.id}"
 end

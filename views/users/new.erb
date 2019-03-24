@@ -1,12 +1,34 @@
 <h2>Создание метки</h2>
 <br/>
-<form action="/marks" method="post" enctype="multipart/form-data" role="form">
- <div class="form-group">
-    <label for="post_title">Номер авто:</label>
-    <br>
-    <input id="mark_car_number" class="form-control" name="mark[car_number]" type="text"  style="width=90%"/>
-    <br>
-    <input id="makr_image" name="mark[image]" type="file" hidden>
- </div>
- <button type="submit" class="btn btn-success">Submit</button>
+<form action="/users" method="post" enctype="multipart/form-data" role="form">
+  <div class="form-group">
+    <label for="post_title">Имя:</label>
+    <input id="mark_car_number" class="form-control" name="user[name]" type="text"  style="width=90%"/>
+  </div>
+  
+  <div class="form-group">
+    <label for="post_title">Ник:</label>
+    <input id="mark_car_number" class="form-control" name="user[nick]" type="text"  style="width=90%"/>
+  </div>
+
+  <div class="form-group">
+    <label for="post_title">Почта:</label>
+    <input id="mark_car_number" class="form-control" name="user[email]" type="text"  style="width=90%"/>
+  </div>
+
+  <div class="form-group">
+    <label for="post_title">Пароль:</label>
+    <input id="mark_car_number" class="form-control" name="user[password]" type="text"  style="width=90%"/>
+  </div>
+
+  <div class="form-group">
+    <label for="post_title">Пол:</label>
+    <input id="mark_car_number" class="form-control" name="user[sex]" type="text"  style="width=90%"/>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Фото профиля</label>
+    <input id="makr_image" name="user[image]" type="file">
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
 </form>
