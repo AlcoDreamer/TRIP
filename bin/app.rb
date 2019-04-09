@@ -189,7 +189,7 @@ end
 post "/users/:id/edit" do
   @user = User.find(params[:id])
   @user.update(params[:user])
-  redirect "/users/#{@user.id}"
+  redirect "/users/#{@user.id}"ыыы
 end
 
 #Edit mark by ID in DB
@@ -198,3 +198,36 @@ put "/users/:id" do
   @user.update(params[:mark])
   redirect "/marks/#{@mark.id}"
 end
+
+##### Вход
+
+get '/sessions/login' do
+
+end
+
+post '/sessions' do
+
+end
+
+#####  Регистрация 
+
+
+get "/registrations/signup" do
+  @title = "Регистрация"
+  erb :"registrations"
+end
+
+post '/registrations' do
+
+end
+
+
+
+
+
+
+
+
+
+
+

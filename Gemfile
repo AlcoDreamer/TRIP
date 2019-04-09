@@ -9,6 +9,8 @@ gem 'sinatra-redirect-with-flash'
 gem 'rake'
 gem 'mini_magick'
 gem 'carrierwave'
+gem 'paperclip'
+gem "aws-sdk"
 
 group :development do
   gem 'sqlite3'
