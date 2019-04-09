@@ -3,6 +3,8 @@
 /bin/public/*
 /bin/tmp/*
 
+dev.db
+
 *.sh
 
 unicorn.rb
