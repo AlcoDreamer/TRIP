@@ -1,5 +1,37 @@
-<h1>Метка</h1>
-<img class="card" src="uploads/mark/image/<%= @mark.id %>/image_<%= @mark.id %>.jpg">
-<p><%= @mark.car_number %></p>
-<br>
-<a type="button" class="btn btn-primary" href="/marks/<%= @mark.id %>/edit">Edit mark</a>
+<div class="i-am-centered">
+  <div class="container">
+    <div class="card my-3 box-shadow" >
+      <img class="card-img-top" src="/uploads/user/image/<%= @user.id %>/image_<%= @user.id %>.<%= "#{@user.image.path}".rpartition('.').last %>" alt="Card image cap">
+      <div class="card-body d-flex flex-column">
+
+        <div class="form-group">
+          <label for="post_title">Имя:</label>
+          <input readonly class="form-control" value="<%= @user.name %>" name="user[name]" type="text"  style="width=90%"/>
+        </div>
+        
+        <div class="form-group">
+          <label for="post_title">Ник:</label>
+          <input readonly class="form-control" value="<%= @user.nick %>" name="user[nick]" type="text"  style="width=90%"/>
+        </div>
+        
+        <div class="form-group">
+          <label for="post_title">Почта:</label>
+          <input readonly class="form-control" value="<%= @user.email %>" name="user[email]" type="text"  style="width=90%"/>
+        </div>
+
+        <div class="form-group">
+          <label for="post_title">Пароль:</label>
+          <input readonly class="form-control" value="<%= @user.password %>" name="user[password]" type="text"  style="width=90%"/>
+        </div>
+
+        <div class="form-group">
+          <label for="post_title">Пол:</label>
+          <input readonly class="form-control" value="<%= @user.sex %>" name="user[sex]" type="text"  style="width=90%"/>
+        </div>
+      </div>
+      <div class="card-footer text-muted text-center">
+        <a href="/users/<%= @user.id %>/edit" class="btn btn-primary">Редактировать</a>
+      </div>
+    </div>
+  </div>
+</div>

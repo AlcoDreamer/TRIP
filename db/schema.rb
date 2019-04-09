@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_24_145013) do
+ActiveRecord::Schema.define(version: 2019_03_24_175625) do
 
   create_table "marks", force: :cascade do |t|
     t.string "car_number"
@@ -20,6 +20,18 @@ ActiveRecord::Schema.define(version: 2019_03_24_145013) do
     t.string "title"
     t.string "author"
     t.text "description"
+    t.string "tags"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "nick"
+    t.string "email"
+    t.string "password"
+    t.string "sex"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
