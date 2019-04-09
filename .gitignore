@@ -1,0 +1,8 @@
+/log/*
+/tmp/*
+/bin/public/*
+/bin/tmp/*
+
+*.sh
+
+unicorn.rb
