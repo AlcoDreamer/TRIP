@@ -189,7 +189,7 @@ end
 post "/users/:id/edit" do
   @user = User.find(params[:id])
   @user.update(params[:user])
-  redirect "/users/#{@user.id}"ыыы
+  redirect "/users/#{@user.id}"
 end
 
 #Edit mark by ID in DB
