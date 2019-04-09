@@ -1,0 +1,31 @@
+<aside class="col-sm-4 mx-auto">
+  <div class="container">
+    <div class="card card-body mb-2">
+      <article class="card-body">
+        <h4 class="card-title text-center mb-4 mt-1">Add new admin</h4>
+        <hr>
+        <form action="/admins" method="post" name="signin">
+          <div class="form-group">
+            <div class="input-group">
+              <input name="admin[login]" class="form-control" placeholder="Login" type="login">
+            </div> <!-- input-group.// -->
+          </div> <!-- form-group// -->
+          <div class="form-group">
+            <div class="input-group">
+              <input name="admin[password1]" class="form-control" placeholder="Password" type="password">
+            </div> <!-- input-group.// -->
+          </div> <!-- form-group// -->
+          <div class="form-group">
+            <div class="input-group">
+              <input name="admin[password2]" class="form-control" placeholder="Confirm Password" type="password">
+            </div> <!-- input-group.// -->
+          </div> <!-- form-group// -->
+          
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block"> Submit  </button>
+          </div> <!-- form-group// -->
+        </form>
+      </article>
+    </div> <!-- card.// -->
+  </div>
+</aside>

@@ -34,31 +34,33 @@
   <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-fixed-top" style="background-color: #000000;">
       <div class="container">
-        <a class="navbar-brand" href="#">TRIIP</a>
+        <a class="navbar-brand" href="<%= home_page %>">TRIIP</a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="/marks">Список меток</a></li>
-            <li class="nav-item"><a class="nav-link" href="/users">Список пользователей</a></li>
-            <li class="nav-item"><a class="nav-link" href="/marks/new">Новая метка</a></li>
-            <li class="nav-item"><a class="nav-link" href="/users/new">Новый пользователь</a></li>
-          </ul>
-          <ul class="navbar-nav mt-2 mt-md-0 ml-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Admin01
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="">Новый админ<span class="sr-only">(current)</span></a>
-                <a class="dropdown-item" href="#">Сменить пароль<span class="sr-only">(current)</span></a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item " href="#">Выход</a>
-              </div>
-            </li>
-          </ul>
-        </div>
+        <% if authorized? %>
+          <div class="navbar-collapse collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item"><a class="nav-link" href="/marks">Список меток</a></li>
+              <li class="nav-item"><a class="nav-link" href="/users">Список пользователей</a></li>
+              <li class="nav-item"><a class="nav-link" href="/marks/new">Новая метка</a></li>
+              <li class="nav-item"><a class="nav-link" href="/users/new">Новый пользователь</a></li>
+            </ul>
+            <ul class="navbar-nav mt-2 mt-md-0 ml-auto">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= admins_name %>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/admins/new">Новый админ<span class="sr-only">(current)</span></a>
+                  <a class="dropdown-item" href="/admins/edit">Сменить пароль<span class="sr-only">(current)</span></a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item " href="/admins/logout">Выход</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        <% end %>
       </div>
     </nav>
     
@@ -70,7 +72,6 @@
         <p class="alert alert-danger"><%= flash[:error] %></p>
       <% end %>
 
-      
         <%= yield %>
       
     </div><!-- /.container -->

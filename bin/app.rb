@@ -35,23 +35,6 @@ class ImagesUploader < CarrierWave::Uploader::Base
   def filename
     "#{mounted_as}_#{model.id}.#{file.extension}"
   end
-=begin
-  version :small do 
-    process :resize_to_fit => [190, 190] 
-    process :convert => 'png' 
-    def filename
-      "small_#{mounted_as}_#{model.id}.#{file.extension}"
-    end
-  end 
-  version :icon do 
-    process :resize_to_fill => [50, 50] 
-    process :convert => 'png'
-    def filename
-      "icon_#{mounted_as}_#{model.id}.#{file.extension}"
-    end
-  end 
-=end
-
   storage :file
 end
 
@@ -65,6 +48,10 @@ class User < ActiveRecord::Base
   mount_uploader :image, ImagesUploader
 end
 
+class Admin < ActiveRecord::Base
+  #validates :car_number, presence: true, length: { maximum: 15 }
+end
+
 helpers do
   def title
     if @title
@@ -73,13 +60,32 @@ helpers do
       "Yasya!"
     end
   end
+  def protected!
+    if not authorized?
+      redirect "/admins/signin"
+    end
+  end
+  def authorized?
+    not (session[:admin_id].nil?)
+  end
+  def admins_name
+    if authorized?
+      (Admin.find(session[:admin_id])).login
+    else
+      "Yasya!"
+    end
+  end
+  def home_page
+    "/marks"
+  end
 end
 
 # All Marks
 get "/" do
+  protected!
   #@marks = Mark.order("created_at DESC")
   #erb :"index"
-  redirect "/marks"
+  redirect home_page
 end
 
 ##############################
@@ -88,27 +94,27 @@ end
 
 # All Marks
 get "/marks" do
-  @title = "Все метки"
+  protected!
   @marks = Mark.order("created_at DESC")
   erb :"marks/all"
 end
 
 #Add new mark
 get "/marks/new" do
-  @title = "Создание новой метки"
+  protected!
   erb :"marks/new"
 end
 
 #Get one mark by ID
 get "/marks/:id" do
-  @title = "Просмотр метки"
+  protected!
   @mark = Mark.find(params[:id])
   erb :"marks/view"
 end
 
 #Edit mark by ID
 get "/marks/:id/edit" do
-  @title = "Редактирование метки"
+  protected!
   @mark = Mark.find(params[:id])
   erb :"marks/edit"
 end
@@ -119,27 +125,27 @@ end
 
 # All Users
 get "/users" do
-  @title = "Все метки"
+  protected!
   @users = User.order("created_at DESC")
   erb :"users/all"
 end
 
 #Add new user
 get "/users/new" do
-  @title = "Создание нового пользователя"
+  protected!
   erb :"users/new"
 end
 
 #Get one user by ID
 get "/users/:id" do
-  @title = "Просмотр пользователя"
+  protected!
   @user = User.find(params[:id])
   erb :"users/view"
 end
 
 #Edit user by ID
 get "/users/:id/edit" do
-  @title = "Редактирование пользователя"
+  protected!
   @user = User.find(params[:id])
   erb :"users/edit"
 end
@@ -147,6 +153,7 @@ end
 
 #Add mark to DB
 post "/marks" do
+  protected!
   @mark = Mark.new
   @mark.image = params[:mark][:image]
   @mark.title = params[:mark][:title]
@@ -159,21 +166,15 @@ post "/marks" do
   redirect "marks/#{@mark.id}"
 end
 
-post "/marks/:id/edit" do
+post "/marks/:id" do
+  protected!
   @mark = Mark.find(params[:id])
   @mark.update(params[:mark])
   redirect "/marks/#{@mark.id}"
 end
-
-#Edit mark by ID in DB
-put "/marks/:id" do
-  @mark = Mark.find(params[:id])
-  @mark.update(params[:mark])
-  redirect "/marks/#{@mark.id}"
-end
-
 
 post "/users" do
+  protected!
   @user = User.new
   @user.image = params[:user][:image]
   @user.name = params[:user][:name]
@@ -186,48 +187,64 @@ post "/users" do
   redirect "users/#{@user.id}"
 end
 
-post "/users/:id/edit" do
+post "/users/:id" do
+  protected!
   @user = User.find(params[:id])
   @user.update(params[:user])
   redirect "/users/#{@user.id}"
 end
 
-#Edit mark by ID in DB
-put "/users/:id" do
-  @user = User.find(params[:id])
-  @user.update(params[:mark])
-  redirect "/marks/#{@mark.id}"
-end
-
 ##### Вход
 
-get '/sessions/login' do
-
+get '/admins/signin' do
+  erb :"admins/signin"
 end
 
-post '/sessions' do
-
+post "/admins/signin" do
+  @admin = Admin.find_by(login: params[:admin][:login], password: params[:admin][:password])
+  if @admin.nil?
+    redirect "/admins/signin"
+  end
+  session[:admin_id] = @admin.id
+  redirect home_page
 end
 
-#####  Регистрация 
-
-
-get "/registrations/signup" do
-  @title = "Регистрация"
-  erb :"registrations"
+get '/admins/logout' do
+  session.clear
+  redirect "/admins/signin"
 end
 
-post '/registrations' do
-
+get '/admins/new' do
+  protected!
+  erb :"admins/new"
 end
 
+post "/admins" do
+  protected!
+  @admin = Admin.new
+  if params[:admin][:password1] != params[:admin][:password2]
+    redirect "/admins/new"
+  end
+  @admin.login = params[:admin][:login]
+  @admin.password = params[:admin][:password1]
+  @admin.save
+  redirecthome_page
+end
 
+get '/admins/edit' do
+  protected!
+  erb :"admins/edit"
+end
 
-
-
-
-
-
-
-
-
+post "/admins/:id" do
+  protected!
+  if params[:admin][:password1] != params[:admin][:password2]
+    redirect "/admins/edit"
+  end
+  @admin = Admin.find(session[:admin_id])
+  if @admin.password != params[:admin][:cur_password]
+    redirect "/admins/edit"
+  end
+  @admin.update(password: params[:admin][:password1])
+  redirect home_page
+end
