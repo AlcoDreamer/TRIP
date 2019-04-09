@@ -1,0 +1,1 @@
+Admin.create!(password: 'root', login: 'root')
