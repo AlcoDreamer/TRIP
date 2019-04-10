@@ -11,7 +11,13 @@ require 'carrierwave/orm/activerecord'
 
 require './bin/environments'
 
-enable :sessions
+#enable :sessions
+
+use Rack::Session::Cookie, 
+  :key => 'rack.session',
+  :path => '/',
+  :expire_after => 14400, # In seconds
+  :secret => 'yasya'
 
 set :port, 8080
 set :static, true
