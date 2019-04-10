@@ -219,6 +219,10 @@ get '/admins/new' do
   erb :"admins/new"
 end
 
+get '/admins/all' do
+  Admin.all.to_json
+end
+
 post "/admins" do
   protected!
   @admin = Admin.new
