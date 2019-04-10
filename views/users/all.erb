@@ -1,23 +1,22 @@
-
-  <div class="i-am-centered">
-    <div class="container">
-      <% @users.each_slice(3) do |slice| %>
-        <div class="row buffer">
-          <div class="card-deck">
-            <% slice.each do |user| %>
-              <div class="card my-3 box-shadow" >
-                <img class="card-img-top" src="/uploads/user/image/<%= user.id %>/image_<%= user.id %>.<%= "#{user.image.path}".rpartition('.').last %>" alt="Card image cap">
-                <div class="card-body d-flex flex-column">
-                  <h4 class="card-title text-center">
-                    <a href="/users/<%= user.id %>"> <%= user.name %> </a>
-                  </h4>
-                  <p class="card-text">Email: <%= user.email %></p>
-                </div>
+<div class="i-am-centered">
+  <div class="container">
+    <% @users.each_slice(3) do |slice| %>
+      <div class="row buffer justify-content-center">
+        <div class="card-deck">
+          <% slice.each do |user| %>
+            <div class="card my-3" style="width: 350px;">
+              <img class="card-img-top" src="/uploads/user/image/<%= user.id %>/image_<%= user.id %>.<%= "#{user.image.path}".rpartition('.').last %>" alt="Card image cap">
+              <div class="card-body d-flex flex-column">
+                <h4 class="card-title text-center">
+                  <a href="/users/<%= user.id %>"> <%= user.name %> </a>
+                </h4>
+                <p class="card-text">Email: <%= user.email %></p>
               </div>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
-      <% end %>
-    </div>
-  
+      </div>
+    <% end %>
   </div>
+
+</div>
