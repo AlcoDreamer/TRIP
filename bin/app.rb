@@ -1,5 +1,7 @@
 require 'sinatra'
 #require 'sinatra/namespace'
+#require "sinatra/namespace"
+require 'sinatra/contrib'
 require 'active_record'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
@@ -49,6 +51,25 @@ class Mark < ActiveRecord::Base
   mount_uploader :image, ImagesUploader
 end
 
+class MarkSerializer
+  def initialize(mark)
+    @mark = mark
+  end
+
+  def as_json(*)
+    data = {
+      id:@mark.id.to_s,
+      title:@mark.title,
+      author:@mark.author,
+      car_number:@mark.car_number,
+      description:@mark.description,
+      tags:@mark.tags
+    }
+    data[:errors] = @mark.errors if@mark.errors.any?
+    data
+  end
+end
+
 class User < ActiveRecord::Base
   #validates :car_number, presence: true, length: { maximum: 15 }
   mount_uploader :image, ImagesUploader
@@ -84,6 +105,22 @@ helpers do
   def home_page
     "/marks"
   end
+
+  def base_url
+    @base_url ||= "#{request.env['rack.url_scheme']}://{request.env['HTTP_HOST']}"
+  end
+
+  def json_params
+    begin
+      JSON.parse(request.body.read)
+    rescue
+      halt 400, { message:'Invalid JSON' }.to_json
+    end
+  end
+end
+
+error do
+  redirect to('/')
 end
 
 # All Marks
@@ -257,4 +294,38 @@ post "/admins/:id" do
   end
   @admin.update(password: params[:admin][:password1])
   redirect home_page
+end
+
+####################################################################################################
+
+namespace '/api/v1' do
+  before do
+    content_type 'application/json'
+  end
+
+  post "/marks" do
+    #protected!
+    @mark = Mark.new(json_params)
+    @mark.image = File.open(Dir.pwd + "/bin/public/uploads/mark/image/default.jpg")
+    
+=begin
+    @mark = Mark.new
+    #@mark.image = params[:mark][:image]
+    @mark.title = params[:mark][:title]
+    #@mark.author = params[:mark][:author]
+    @mark.car_number = params[:mark][:car_number]
+    @mark.description = params[:mark][:description]
+    @mark.tags = params[:mark][:tags]
+    #mark = params[:mark]
+=end
+
+    print(@mark.image)
+    if @mark.save
+      response.headers['Location'] = "#{base_url}/api/v1/books/#{@mark.id}"
+      status 201
+    else
+      status 422
+      body MarkSerializer.new(@mark).to_json
+    end
+  end
 end
