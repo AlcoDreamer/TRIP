@@ -339,7 +339,7 @@ namespace '/api/v1' do
 
   post "/users" do
     @user = User.new(json_params)
-    if user.sex == "female"
+    if @user.sex == "female"
       @user.image = File.open(Dir.pwd + "/bin/default/user_default_female.jpg")
     else
       @user.image = File.open(Dir.pwd + "/bin/default/user_default_male.jpg")
