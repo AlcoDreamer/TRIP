@@ -343,6 +343,7 @@ namespace '/api/v1' do
       @user.image = File.open(Dir.pwd + "/bin/default/user_default_female.jpg")
     else
       @user.image = File.open(Dir.pwd + "/bin/default/user_default_male.jpg")
+    end
 
     if @user.save
       #response.headers['Location'] = "#{base_url}/api/v1/books/#{@mark.id}"
