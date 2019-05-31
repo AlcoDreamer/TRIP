@@ -70,6 +70,11 @@ class MarkSerializer
   end
 end
 
+class User < ActiveRecord::Base
+  #validates :car_number, presence: true, length: { maximum: 15 }
+  mount_uploader :image, ImagesUploader
+end
+
 class UserSerializer
   def initialize(user)
     @user = user
@@ -87,11 +92,6 @@ class UserSerializer
     data[:errors] = @user.errors if@user.errors.any?
     data
   end
-end
-
-class User < ActiveRecord::Base
-  #validates :car_number, presence: true, length: { maximum: 15 }
-  mount_uploader :image, ImagesUploader
 end
 
 class Admin < ActiveRecord::Base
@@ -322,6 +322,12 @@ end
 namespace '/api/v1' do
   before do
     content_type 'application/json'
+  end
+
+  get "/marks" do
+    @marks = Mark.order("created_at DESC")
+    status 200
+    body @marks.to_json
   end
 
   post "/marks" do
