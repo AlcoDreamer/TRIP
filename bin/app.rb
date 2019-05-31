@@ -326,7 +326,7 @@ namespace '/api/v1' do
 
   get '/marks' do
     @marks = Mark.order("created_at DESC")
-    #status 200
+    status 200
     @marks.to_json
   end
 
