@@ -70,6 +70,25 @@ class MarkSerializer
   end
 end
 
+class UserSerializer
+  def initialize(user)
+    @user = user
+  end
+
+  def as_json(*)
+    data = {
+      id:@user.id.to_s,
+      name:@user.name,
+      nick:@user.nick,
+      email:@user.email,
+      password:@user.password,
+      sex:@user.sex
+    }
+    data[:errors] = @user.errors if@user.errors.any?
+    data
+  end
+end
+
 class User < ActiveRecord::Base
   #validates :car_number, presence: true, length: { maximum: 15 }
   mount_uploader :image, ImagesUploader
@@ -297,6 +316,8 @@ post "/admins/:id" do
 end
 
 ####################################################################################################
+####################################################################################################
+####################################################################################################
 
 namespace '/api/v1' do
   before do
@@ -304,28 +325,31 @@ namespace '/api/v1' do
   end
 
   post "/marks" do
-    #protected!
     @mark = Mark.new(json_params)
-    @mark.image = File.open(Dir.pwd + "/bin/public/uploads/mark/image/default.jpg")
+    @mark.image = File.open(Dir.pwd + "/bin/default/mark_default.jpg")
     
-=begin
-    @mark = Mark.new
-    #@mark.image = params[:mark][:image]
-    @mark.title = params[:mark][:title]
-    #@mark.author = params[:mark][:author]
-    @mark.car_number = params[:mark][:car_number]
-    @mark.description = params[:mark][:description]
-    @mark.tags = params[:mark][:tags]
-    #mark = params[:mark]
-=end
-
-    print(@mark.image)
     if @mark.save
-      response.headers['Location'] = "#{base_url}/api/v1/books/#{@mark.id}"
+      #response.headers['Location'] = "#{base_url}/api/v1/books/#{@mark.id}"
       status 201
     else
       status 422
       body MarkSerializer.new(@mark).to_json
+    end
+  end
+
+  post "/users" do
+    @user = User.new(json_params)
+    if user.sex == "female"
+      @user.image = File.open(Dir.pwd + "/bin/default/user_default_female.jpg")
+    else
+      @user.image = File.open(Dir.pwd + "/bin/default/user_default_male.jpg")
+
+    if @user.save
+      #response.headers['Location'] = "#{base_url}/api/v1/books/#{@mark.id}"
+      status 201
+    else
+      status 422
+      body UserSerializer.new(@user).to_json
     end
   end
 end
