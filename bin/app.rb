@@ -324,13 +324,13 @@ namespace '/api/v1' do
     content_type 'application/json'
   end
 
-  get "/marks" do
+  get '/marks' do
     @marks = Mark.order("created_at DESC")
-    status 200
-    body @marks.to_json
+    #status 200
+    @marks.to_json
   end
 
-  post "/marks" do
+  post '/marks' do
     @mark = Mark.new(json_params)
     @mark.image = File.open(Dir.pwd + "/bin/default/mark_default.jpg")
     
@@ -343,7 +343,7 @@ namespace '/api/v1' do
     end
   end
 
-  post "/users" do
+  post '/users' do
     @user = User.new(json_params)
     if @user.sex == "female"
       @user.image = File.open(Dir.pwd + "/bin/default/user_default_female.jpg")
