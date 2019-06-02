@@ -69,7 +69,8 @@ require './bin/environments'
         description:@mark.description,
         tags:@mark.tags,
         lat:@mark.lat,
-        lng:@mark.lng
+        lng:@mark.lng,
+        mark_time:@mark.mark_time
       }
       data[:errors] = @mark.errors if@mark.errors.any?
       data
