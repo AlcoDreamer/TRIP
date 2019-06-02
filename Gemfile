@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "sinatra", ">= 2.0.2"
+gem "sinatra", ">= 2.0.2", require: 'sinatra/base'
 gem "activerecord"
 gem "sinatra-activerecord"
 gem 'rack-flash3'
@@ -11,6 +11,7 @@ gem 'mini_magick'
 gem 'carrierwave'
 gem 'paperclip'
 gem "aws-sdk"
+gem "sinatra-contrib",require: false
 
 group :development do
   gem 'sqlite3'
